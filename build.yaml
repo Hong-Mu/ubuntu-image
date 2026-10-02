@@ -1,0 +1,27 @@
+name: Ubuntu Core 26 image
+on:
+  workflow_dispatch:
+
+jobs:
+  ubuntu-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Build the Ubuntu Core image
+        run: |
+          sudo snap install ubuntu-image --classic
+          ubuntu-image snap ubuntu-core-26-amd64.model --output-dir out
+          ls -lh out
+
+      - name: Compress the image
+        run: |
+          cd out
+          xz -T0 -v *.img
+
+      - name: Upload image artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ubuntu-core-26-amd64-image
+          path: out/*.img.xz
