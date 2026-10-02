@@ -12,7 +12,7 @@ jobs:
       - name: Build the Ubuntu Core image
         run: |
           sudo snap install ubuntu-image --classic
-          ubuntu-image snap ubuntu-core-26-amd64.model --output-dir out
+          ubuntu-image snap ubuntu-core-26-amd64.model --snap console-conf --output-dir out
           ls -lh out
 
       - name: Compress the image
